@@ -1,14 +1,33 @@
-var images = [];
+// Guardamos las imagenes dos veces en un array y despues cambios su orden aleatoriamente
+var images = [
+  'img/cat00.jpg',
+  'img/cat00.jpg',
+  'img/cat01.jpg',
+  'img/cat01.jpg',
+  'img/cat02.jpg',
+  'img/cat02.jpg',
+  'img/cat03.jpg',
+  'img/cat03.jpg',
+  'img/cat04.jpg',
+  'img/cat04.jpg',
+  'img/cat05.jpg',
+  'img/cat05.jpg',
+  'img/cat06.jpg',
+  'img/cat06.jpg',
+  'img/cat07.jpg',
+  'img/cat07.jpg'
+];
+randomizeImages();
 
 // get images, place them in an array & randomize the order
-for (var i = 0; i < 8; i++) { 
+/*for (var i = 0; i < 8; i++) { 
   var img = 'img/cat0' + i + '.jpg';
   images.push(img);
   images.push(img);
-}
-randomizeImages();
+}*/
 
-// output images then hide them
+
+// Ordenaremos las imagenes en una tabla
 var output = "<ol>"; 
 for (var i = 0; i < 16; i++) { 
   output += "<li>";
@@ -17,55 +36,69 @@ for (var i = 0; i < 16; i++) {
 }
 output += "</ol>";
 document.getElementById("container").innerHTML = output;
-$("img").hide();
+
+// Y ocultaremos su visibilidad (boca abajo)
+var gatitos = document.getElementsByTagName("img");
+for(var i = 0; i < gatitos.length; i ++) {
+  gatitos[i].style.display = "none";
+}
 
 var guess1 = "";
 var guess2 = "";
 var count = 0;
 
-$("li").click(function() {
-  if ((count < 2) &&  ($(this).children("img").hasClass("face-up")) === false) {
-    
-    // increment guess count, show image, mark it as face up
-    count++;
-    $(this).children("img").show();
-    $(this).children("img").addClass("face-up");
-    
-    //guess #1
-    if (count === 1 ) { 
-      guess1 = $(this).children("img").attr("src"); 
-    }   
-    
-    //guess #2
-    else { 
-      guess2 = $(this).children("img").attr("src"); 
-      
-      // since it's the 2nd guess check for match
-      if (guess1 === guess2) { 
-        console.log("match");
-        $("li").children("img[src='" + guess2 + "']").addClass("match");
-      } 
-      
-      // else it's a miss
-      else { 
-        console.log("miss");
-        setTimeout(function() {
-          $("img").not(".match").hide();
-          $("img").not(".match").removeClass("face-up");
-        }, 1000);
+NodeList.prototype.addEventListener = function(event, func) {
+    this.forEach(function(content, item) {
+       content.addEventListener(event, func);
+    });
+}
+
+function voltearCarta() {
+  if(count < 2 && this.getElementsByClassName('face-up')) {
+    count ++;
+    this.children[0].style.display = "block";
+    this.children[0].className = "face-up";
+    console.log();
+
+    // Intento 1
+    if(count === 1) {
+      guess1 = this.children[0].getAttribute("src");
+    }
+    // Intento 2
+    else {
+      guess2 = this.children[0].getAttribute("src");
+      // Apartir del segundo intento, comenzamos a revisar si son iguales
+
+      // Acierto!
+      if(guess1 == guess2) {
+        console.log("Match :)");
+        var correct = document.querySelectorAll('img[src="' + this.children[0].getAttribute("src") + '"]');
+        correct[0].className = "match";
+        correct[1].className = "match";
+
       }
-      
-      // reset
-      count = 0; 
-      setTimeout(function() { console.clear(); }, 60000);      
+      // No acertó :(
+      else {
+        // Buscamos todos las imagenes que no hayan acertado
+        var incorrect = document.querySelectorAll('img:not(.match)');
+        // Y las ocultamos
+        incorrect.forEach(function(el){ 
+          el.style.display = "none";
+          el.classList.remove("face-up");
+        });
+      }
+      // Reiniciamos
+      count = 0;
     }
   }
-});
+}
+
+var elements = document.querySelectorAll("li");
+elements.addEventListener("click", voltearCarta);
 
 // randomize array of images
 function randomizeImages(){
-  Array.prototype.randomize = function()
-  {
+  Array.prototype.randomize = function() {
     var i = this.length, j, temp;
     while ( --i )
     {
