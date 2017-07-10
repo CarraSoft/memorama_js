@@ -27,21 +27,15 @@ randomizeImages();
 }*/
 
 
-// Ordenaremos las imagenes en una tabla
+// Ordenaremos las imagenes en una tabla y ocultaremos su visibilidad (boca abajo)
 var output = "<ol>"; 
 for (var i = 0; i < 16; i++) { 
   output += "<li>";
-  output += "<img src = '" + images[i] + "'/>";
+  output += "<img style='display:none' src = '" + images[i] + "'/>";
   output += "</li>";
 }
 output += "</ol>";
 document.getElementById("container").innerHTML = output;
-
-// Y ocultaremos su visibilidad (boca abajo)
-var gatitos = document.getElementsByTagName("img");
-for(var i = 0; i < gatitos.length; i ++) {
-  gatitos[i].style.display = "none";
-}
 
 var guess1 = "";
 var guess2 = "";
@@ -54,7 +48,9 @@ NodeList.prototype.addEventListener = function(event, func) {
 }
 
 function voltearCarta() {
-  if(count < 2 && this.getElementsByClassName('face-up')) {
+  if(count < 2 && this.children[0].className != 'match') {
+    console.log(this);
+    console.log(this.children[0].className);
     count ++;
     this.children[0].style.display = "block";
     this.children[0].className = "face-up";
