@@ -26,7 +26,6 @@ randomizeImages();
   images.push(img);
 }*/
 
-
 // Ordenaremos las imagenes en una tabla y ocultaremos su visibilidad (boca abajo)
 var output = "<ol>"; 
 for (var i = 0; i < 16; i++) { 
@@ -49,12 +48,9 @@ NodeList.prototype.addEventListener = function(event, func) {
 
 function voltearCarta() {
   if(count < 2 && this.children[0].className != 'match') {
-    console.log(this);
-    console.log(this.children[0].className);
     count ++;
     this.children[0].style.display = "block";
     this.children[0].className = "face-up";
-    console.log();
 
     // Intento 1
     if(count === 1) {
@@ -78,10 +74,12 @@ function voltearCarta() {
         // Buscamos todos las imagenes que no hayan acertado
         var incorrect = document.querySelectorAll('img:not(.match)');
         // Y las ocultamos
+        setTimeout(function() {
         incorrect.forEach(function(el){ 
           el.style.display = "none";
           el.classList.remove("face-up");
         });
+        }, 1000);
       }
       // Reiniciamos
       count = 0;
