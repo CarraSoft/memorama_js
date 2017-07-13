@@ -1,5 +1,5 @@
-#Memorama Js
+# Memorama Js
 Practica para nuestro grupo de estudio
 
-##Screenshots
+## Screenshots
 ![Screenshot](img/screenshot.png)
