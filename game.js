@@ -1,4 +1,4 @@
-// Creamos un arreglo para guarda las imagenes (2 veces c/u) y despues cambios su orden aleatoriamente
+/*// Creamos un arreglo para guarda las imagenes (2 veces c/u) y despues cambios su orden aleatoriamente
 var images = [];
 for (var i = 0; i < 8; i++) { 
   var img = 'img/cat0' + i + '.jpg';
@@ -87,4 +87,4 @@ function randomizeImages(){
     }
   };  
   images.randomize();
-}
+}*/
